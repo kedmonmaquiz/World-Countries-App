@@ -6,7 +6,7 @@ void main(){
       MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'All Countries',
-          home: AllCountries(),
+          home: new AllCountries(),
       )
   );
 }
