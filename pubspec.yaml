@@ -26,6 +26,9 @@ dependencies:
 
   #Packages Added by me
   dio: ^3.0.9
+  flip_card: ^0.4.4
+  flutter_svg: ^0.17.3+1
+
 
 dev_dependencies:
   flutter_test:

@@ -24,7 +24,6 @@ class _AllCountriesState extends State<AllCountries> {
 
   @override
   Widget build(BuildContext context) {
-    print(countries);
     return Scaffold(
         appBar: AppBar(
           title: Text('All Countries'),
@@ -37,28 +36,28 @@ class _AllCountriesState extends State<AllCountries> {
                 future: countries,
                 builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
                   if (snapshot.hasData) {
-                    print(snapshot);
                     return ListView.builder(
+                        itemCount: snapshot.data.length,
                         itemBuilder: (BuildContext context, int index) {
-                      return GestureDetector(
-                          child: Card(
-                            elevation: 10,
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 15.0, horizontal: 8.0),
-                              child: Text(
-                                snapshot.data[index]['name'],
-                                style: TextStyle(fontSize: 18),
+                          return GestureDetector(
+                              child: Card(
+                                elevation: 10,
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 15.0, horizontal: 8.0),
+                                  child: Text(
+                                    snapshot.data[index]['name'],
+                                    style: TextStyle(fontSize: 18),
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
-                          onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (BuildContext context) {
-                              return Country(snapshot.data[index]);
-                            }));
-                          });
-                    });
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (BuildContext context) {
+                                  return Country(snapshot.data[index]);
+                                }));
+                              });
+                        });
                   }
                   return Text(
                     'Countries loading failed , Please Check your internet Connection....',
