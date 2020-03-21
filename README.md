@@ -1,6 +1,6 @@
 # world_countries_app
 
-Amazing App for All Countries in the World
+Amazing App that shows All Countries in the World
 
 ## Getting Started
 
