@@ -10,10 +10,14 @@ class AllCountries extends StatefulWidget {
 
 class _AllCountriesState extends State<AllCountries> {
   Future<List> countries;
+  bool isPressed = false;
 
   Future<List> getAllCountries() async {
     var response = await Dio().get('https://restcountries.eu/rest/v2/all');
     return response.data;
+  }
+  void filterCountries(String value) {
+    print(value);
   }
 
   @override
@@ -26,8 +30,44 @@ class _AllCountriesState extends State<AllCountries> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('All Countries'),
+          title: !isPressed ?
+             Text('All Countries') :
+             TextField(
+               style: TextStyle(
+                   color: Colors.white,
+                 fontSize: 18.0,
+               ),
+               decoration: InputDecoration(
+               icon: Icon(Icons.search,color: Colors.white,),
+                 hintText: 'Search a Country here',
+                 hintStyle: TextStyle(color: Colors.white),
+
+             ),
+               onChanged: (value){
+                 filterCountries(value);
+               },
+             ),
           backgroundColor: Colors.pink,
+          actions: <Widget>[
+            !isPressed ? IconButton(
+              icon: IconButton(
+                  icon: Icon(Icons.search,color: Colors.white,),
+                  onPressed: (){
+                    setState(() {
+                      this.isPressed = !this.isPressed;
+                    });
+                  }
+              ),
+            ):
+            IconButton(
+                icon: Icon(Icons.cancel),
+                onPressed: (){
+                  setState(() {
+                    this.isPressed = !this.isPressed;
+                  });
+                }
+            ),
+          ],
         ),
         body: Container(
           child: Padding(
@@ -60,11 +100,12 @@ class _AllCountriesState extends State<AllCountries> {
                         });
                   }
                   return Text(
-                    'Countries loading failed , Please Check your internet Connection....',
+                    'Loading ...',
                     style: TextStyle(color: Colors.red, fontSize: 20),
                   );
                 }),
           ),
         ));
   }
+
 }
