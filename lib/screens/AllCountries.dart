@@ -10,6 +10,7 @@ class AllCountries extends StatefulWidget {
 
 class _AllCountriesState extends State<AllCountries> {
   List countries=[];
+  List filteredCountries=[];
   bool isPressed = false;
 
   getAllCountries() async {
@@ -19,13 +20,16 @@ class _AllCountriesState extends State<AllCountries> {
 
   void filterCountries(String value) {
     print(value);
+    setState(() {
+      filteredCountries = countries.where((country) => country['name'].toLowerCase().contains(value.toLowerCase())).toList();
+    });
   }
 
   @override
   void initState() {
     getAllCountries().then((data) {
         setState(() {
-          countries = data;
+          countries = filteredCountries = data;
         });
     });
     super.initState();
@@ -73,6 +77,7 @@ class _AllCountriesState extends State<AllCountries> {
                     onPressed: () {
                       setState(() {
                         this.isPressed = !this.isPressed;
+                        filteredCountries = countries;
                       });
                     }),
           ],
@@ -80,8 +85,8 @@ class _AllCountriesState extends State<AllCountries> {
         body: Container(
           child: Padding(
               padding: EdgeInsets.all(10.0),
-              child: countries.length > 0 ? ListView.builder(
-                  itemCount: countries.length,
+              child: filteredCountries.length > 0 ? ListView.builder(
+                  itemCount: filteredCountries.length,
                   itemBuilder: (BuildContext context, int index) {
                     return GestureDetector(
                         child: Card(
@@ -90,7 +95,7 @@ class _AllCountriesState extends State<AllCountries> {
                             padding: EdgeInsets.symmetric(
                                 vertical: 15.0, horizontal: 8.0),
                             child: Text(
-                              countries[index]['name'],
+                              filteredCountries[index]['name'],
                               style: TextStyle(fontSize: 18),
                             ),
                           ),
@@ -98,7 +103,7 @@ class _AllCountriesState extends State<AllCountries> {
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (BuildContext context) {
-                            return Country(countries[index]);
+                            return Country(filteredCountries[index]);
                           }));
                         });
                   }) :
