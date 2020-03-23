@@ -23,32 +23,31 @@ class Country extends StatelessWidget {
             FlipCard(
               direction: FlipDirection.VERTICAL,
               front: CountryCard(title: 'Capital'),
-              back: CountryDetailCard(title: country['capital'],),
+              back: CountryDetailCard(title: country['capital'],color: Colors.deepPurple,),
             ),
             FlipCard(
               direction: FlipDirection.VERTICAL,
               front: CountryCard(title: 'Population'),
-              back: CountryDetailCard(title: country['population'].toString(),),
+              back: CountryDetailCard(title: country['population'].toString(),color: Colors.teal,),
             ),
             FlipCard(
               direction: FlipDirection.VERTICAL,
               front: CountryCard(title: 'Flag'),
               back: Card(
                 child: Center(
-                  child: SvgPicture.network(country['flag'],fit: BoxFit.cover,),
+                  child: SvgPicture.network(country['flag']),
                 ),
-                color: Colors.lightBlueAccent,
               ),
             ),
             FlipCard(
               direction: FlipDirection.VERTICAL,
               front: CountryCard(title: 'Currency'),
-              back: CountryDetailCard(title: country['currencies'][0]['name'],),
+              back: CountryDetailCard(title: country['currencies'][0]['name'],color: Colors.lightBlueAccent),
             ),
             FlipCard(
               direction: FlipDirection.VERTICAL,
               front: CountryCard(title: 'Show on Map'),
-              back: CountryDetailCard(title: 'Location',),
+              back: CountryDetailCard(title: 'Location',color: Colors.red),
             ),
           ],
         ),
@@ -59,8 +58,10 @@ class Country extends StatelessWidget {
 
 class CountryDetailCard extends StatelessWidget {
   final String title;
+  final Color color;
+
   const CountryDetailCard({
-    Key key,this.title
+    Key key,this.title,this.color
   }) : super(key: key);
 
   @override
@@ -72,7 +73,7 @@ class CountryDetailCard extends StatelessWidget {
           style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 20),
         ),
       ),
-      color: Colors.lightBlueAccent,
+      color: color,
     );
   }
 }
